@@ -1,20 +1,33 @@
-import React, { useContext } from "react";
-import { SidebarContext } from "../contexts/SidebarContext";
-import { BsBag } from 'react-icons/bs';
-import '../pages/styles.css'; 
+import React, { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom'; 
+import { CartContext } from '../contexts/CartContext';
+import '../styles.css'; 
+
 const Header = () => {
-    const {isOpen, setIsOpen} = useContext(SidebarContext);
-    
+    const { cart } = useContext(CartContext);
+    const location = useLocation(); 
+
     return (
-        <header className="bg-pink-200">
-        <div>Header</div>
-            <div onClick={() => setIsOpen(!isOpen)}
-            className="cursor-pointer flex relative">
-                <BsBag className="text-2xl" />
+        <div className="header">
+            <div className="header-container">
+                {/* Home link */}
+                <Link to="/" className="header-title">
+                    Momentum Solutions Co
+                </Link>
+                {/* Cart link */}
+                <Link to="/cart" className="cart-icon">
+                    <i className="fas fa-shopping-cart"></i>
+                    ({cart.length})
+                </Link>
+                {/* Conditional Home link */}
+                {location.pathname !== '/' && (
+                    <Link to="/" className="home-link">
+                        Home
+                    </Link>
+                )}
+            </div>
         </div>
-        </header>
     );
 };
-
 
 export default Header;

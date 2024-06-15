@@ -1,32 +1,36 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { IoMdArrowForward } from 'react-icons/io';
-import { FiTrash2 } from 'react-icons/fi';
-import { SidebarContext } from '../contexts/SidebarContext';
-import CartItem from '../components/CartItem';
-import '../pages/styles.css'; 
+import React, { useContext } from 'react';
 import { CartContext } from '../contexts/CartContext';
-
+import '../styles.css';
 const Sidebar = () => {
-    const { isOpen, handleClose } = useContext(SidebarContext);
-    console.log(useState(CartContext));
+    const { cart } = useContext(CartContext);
 
     return (
-        <div
-            className={` ${isOpen ? 'right-0' : '-right-full'} 
-        w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-20 px-4 lg:px-[35px]`}
-        >
-            <div className='flex items-center justify-between py-6 border-b'>      
-                <div className='uppercase text-sm font-semibold'>Shopping Bag (0)</div>
-                { /* icon*/}
-                <div
-                    onClick={handleClose}
-                    className='cursor-pointer w-8 h-8 flex justify-center items-center'>
-                <IoMdArrowForward className='text-2xl'/>
-         </div>
-     </div>
-</div>
-        
+        <div className="sidebar">
+            <h2>Your Shopping Cart</h2>
+            {cart.length === 0 ? (
+                <p className="sidebar-empty">Your cart is empty.</p>
+            ) : (
+                <>
+                    {cart.map((product) => (
+                        <div key={product.id} className="sidebar-item">
+                            <div className="sidebar-item-image">
+                                <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    style={{ maxWidth: '100px' }} 
+                                />
+                            </div>
+                            <div className="sidebar-item-details">
+                                <h3>{product.title}</h3>
+                                <p><strong>Category:</strong> {product.category}</p>
+                                <p><strong>Price:</strong> ${product.price}</p>
+                                {/* Add more product details as needed */}
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+        </div>
     );
 };
 

@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPlus, BsEyeFill } from 'react-icons/bs';
 import { CartContext } from '../contexts/CartContext';
-import './Product.css';
+import '../styles.css';
 
 const Product = ({ product }) => {
     const { addToCart } = useContext(CartContext);
-    // Destructure product
     const { id, image, category, title, price } = product;
 
     return (
@@ -16,26 +15,25 @@ const Product = ({ product }) => {
                     <img
                         className="product-image"
                         src={image}
-                        alt={title} // Use title or a suitable alt text
+                        alt={title}
                     />
                 </Link>
             </div>
             <div className="product-info">
-                {/* Product buttons */}
+                <h3 className='product-title'>{title}</h3>
+                <p className="product-category">{category}</p>
+                <p className="product-price">${price}</p>
                 <div className="product-buttons">
-                    <button onClick={() => addToCart(product)} className="product-button">
-                        <BsPlus className="text-xl text-white" /> {/* Adjusted icon size */}
+                    <button 
+                        className="product-button add-button"
+                        onClick={() => addToCart(product)}
+                    >
+                        <BsPlus className="icon" /> Add
                     </button>
-                    <Link to={`/product/${id}`} className="product-button">
-                        <BsEyeFill className="text-xl text-primary" /> {/* Adjusted icon size */}
+                    <Link to={`/product/${id}`} className="product-button view-button">
+                        <BsEyeFill className="icon" /> View
                     </Link>
                 </div>
-                {/* Product details */}
-                <div className="product-category">{category}</div> {/* Added category */}
-                <Link to={`/product/${id}`} className='product-title'>
-                    <h3 className='font-semibold mb-1 text-sm'>{title}</h3> {/* Adjusted font size */}
-                </Link>
-                <div className="product-price">${price}</div>
             </div>
         </div>
     );
